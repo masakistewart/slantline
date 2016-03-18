@@ -15,5 +15,13 @@
   "bugs": {
     "url": "https://github.com/masakistewart/slantline/issues"
   },
-  "homepage": "https://github.com/masakistewart/slantline#readme"
+  "homepage": "https://github.com/masakistewart/slantline#readme",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "dotenv": "^2.0.0",
+    "knex": "^0.10.0",
+    "method-override": "^2.3.5",
+    "morgan": "^1.7.0",
+    "pg": "^4.5.1"
+  }
 }
