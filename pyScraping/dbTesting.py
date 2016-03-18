@@ -1,25 +1,22 @@
 import psycopg2
-from abcscraper import getAbcHeadlines
-headlines = getAbcHeadlines()
+import mainScraper
 
-
-
-
-def insertData(array):
+def insertIntoNewsTable(array):
 	try:
 	    conn = psycopg2.connect("dbname=pythonTestDB user=MasakiStewart")
 	except:
 	    print("I am unable to connect to the database")
 	con= conn.cursor()
 	for item in array:
-		sql = "INSERT INTO abcnews (title) VALUES (%s);"
-		data = (item,)
+		sql = "INSERT INTO news (title, summary, source) VALUES (%s, %s, %s);"
+		data = (item["title"], item["summary"], item["source"])
 		con.execute(sql, data)
+	print("done")
 	conn.commit()
 	con.close()
 	conn.close()
 
-def getDbEntries(tableName,fields):
+def getDbEntries(tableName):
 	try:
 	    conn = psycopg2.connect("dbname=pythonTestDB user=MasakiStewart")
 	    print('connected')
@@ -34,22 +31,22 @@ def getDbEntries(tableName,fields):
 	curs.close()
 	conn.close()
 
-def addIfDoesNotExist(getDbData, getHeadlines, tableName, companyName):
-	dbData = getDbData()
-	headlines = getHeadlines()
+def addIfDoesNotExist(tableName):
+	allTheNews = mainScraper.getAll(mainScraper.newsFeeds)
 	middleMan = {}
 	unique = []
-	for entry in dbRes:
+	dbList = getDbEntries(tableName)
+	for entry in dbList:
 	    middleMan[entry[0]] = 0
 	counter = 0
-	for headline in incoming:
+	for headline in allTheNews:
 	    try:
-	        middleMan[incoming]
+	        middleMan[headline["title"]]
 	        print("entry exists")
 	    except:
-	        unique.append(incoming)
+	        unique.append(headline)
 	        counter += 1
-	print("there were", counter, "With ", unique)
+	print(counter)
+	insertIntoNewsTable(unique)
 
-
-print()
+addIfDoesNotExist('news')
