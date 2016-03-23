@@ -3,13 +3,13 @@ import mainScraper
 
 def insertIntoNewsTable(array):
 	try:
-	    conn = psycopg2.connect("dbname=pythonTestDB user=MasakiStewart")
+        conn = psycopg2.connect("dbname=pythonTestDB user=MasakiStewart")
 	except:
-	    print("I am unable to connect to the database")
+        print("I am unable to connect to the database")
 	con= conn.cursor()
 	for item in array:
-		sql = "INSERT INTO news (title, summary, source) VALUES (%s, %s, %s);"
-		data = (item["title"], item["summary"], item["source"])
+		sql = "INSERT INTO news (title, summary, source, link) VALUES (%s, %s, %s, %s);"
+		data = (item["title"], item["summary"], item["source"], item["links"])
 		con.execute(sql, data)
 	print("done")
 	conn.commit()
@@ -37,13 +37,13 @@ def addIfDoesNotExist(tableName):
 	unique = []
 	dbList = getDbEntries(tableName)
 	for entry in dbList:
-	    middleMan[entry[0]] = 0
+        middleMan[entry[0]] = 0
 	counter = 0
 	for headline in allTheNews:
-	    try:
+        try:
 	        middleMan[headline["title"]]
 	        print("entry exists")
-	    except:
+        except:
 	        unique.append(headline)
 	        counter += 1
 	print(counter)

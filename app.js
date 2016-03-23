@@ -9,9 +9,9 @@ var angularRoutes	= require('./routes/angularRoutes.js');
 var morgan			= require('morgan');
 var bodyParser		= require('body-parser');
 // MIDDLEWARE Initiation
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/client'));
 app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: false}));
 // ROUTING
 app.use('/', angularRoutes)
 app.use('/api', apiRoutes)

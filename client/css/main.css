@@ -1,0 +1,136 @@
+body {
+	height: 100%;
+	width: 100%;
+	font-size: 16px;
+}
+nav {
+	margin-bottom: 0;
+}
+.center {
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.green-header-bg {
+	background: #00695C;
+}
+
+.orange-header-bg {
+ background: #F57C00;
+}
+
+.landing-page-panel-text {
+	font-weight: bold;
+	text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+#hero-words{
+	color: rgba(255, 255, 255, 0.8);
+  font-size: 4em;
+  text-align: center;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.card {
+  min-height: 16em;
+  background: #cecece;
+  overflow: hidden;
+}
+
+.card-title {
+  color: red;
+}
+
+/*.card-action {
+  max-height: 2em;
+}*/
+
+.orange-text {
+	color: #F57C00;
+}
+
+span {
+  height: 4em;
+  position: relative;
+}
+
+.container {
+	width: 98%;
+	margin-right: auto;
+	margin-left: auto;
+	max-width: 99.5%;
+}
+
+#hero-text {
+	text-align: center;
+  font-size: 2em;
+  color: rgba(239, 108, 0, 0.9);
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+#height-30 {
+	height: 100%;
+	width: 100%;
+}
+
+#main-page-bg {
+	background: url("/images/main-page-bg.jpg");
+	width: 100%;
+	height: 24em;
+	background-size: cover;
+}
+
+.scrolling-div {
+  height: 4em;
+  width: 90%;
+}
+
+
+/* Side Scrolling Text */
+
+.example1 {
+ height: 50px;  
+ overflow: hidden;
+ position: relative;
+}
+
+span.card-title {
+ position: absolute;
+ width: 50em;
+ height: 100%;
+ margin: 0;
+ line-height: 1em;
+ /* Starting position */
+/* -moz-transform:translateX(100%);
+ -webkit-transform:translateX(100%);  
+ transform:translateX(100%);*/
+ /* Apply animation to this element */  
+ -moz-animation: example1 8s linear infinite;
+ -webkit-animation: example1 8s linear infinite;
+ animation: example1 8s linear infinite;
+}
+/* Move it (define the animation) */
+@-moz-keyframes example1 {
+ 0%   { -moz-transform: translateX(100%); }
+ 100% { -moz-transform: translateX(-100%); }
+}
+@-webkit-keyframes example1 {
+ 0%   { -webkit-transform: translateX(100%); }
+ 100% { -webkit-transform: translateX(-100%); }
+}
+@keyframes example1 {
+ 0%   { 
+ -moz-transform: translateX(100%); /* Firefox bug fix */
+ -webkit-transform: translateX(100%); /* Firefox bug fix */
+ transform: translateX(100%);     
+ }
+ 100% { 
+ -moz-transform: translateX(-100%); /* Firefox bug fix */
+ -webkit-transform: translateX(-100%); /* Firefox bug fix */
+ transform: translateX(-100%); 
+ }
+}

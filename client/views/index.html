@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="pineNews">
+<head>
+	<title>Pineapple News</title>
+	<base href="/">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="/css/main.css">
+</head>
+<body>
+	<div class="navbar-fixed">
+		<nav class="white raised">
+			<div class="nav-wrapper">
+					<a href="/" class="brand-logo center green-text thin">Pineapple News</a>
+			</div>
+		</nav>
+	</div>
+	<div ng-view>
+	</div>
+	<!-- Angular Material requires Angular.js Libraries -->
+	<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+	<script src="/js/moment.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-route.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.0-beta.5/angular-moment.min.js"></script>
+	<script type="text/javascript" src="/appNG.js"></script>
+	<script type="text/javascript" src="/controllers/controller.js"></script>
+	<script type="text/javascript" src="/services/filters.js"></script>
+</body>
+</html>
