@@ -2,37 +2,53 @@ body {
 	height: 100%;
 	width: 100%;
 	font-size: 16px;
+	background: #FAFAFA;
 }
+
 nav {
 	margin-bottom: 0;
 }
+
 .center {
 	margin-right: auto;
 	margin-left: auto;
 }
 
-.green-header-bg {
-	background: #00695C;
+.eight-hundred-bg {
+	background: #F5F5F5;
 }
 
-.orange-header-bg {
- background: #F57C00;
+.eight-hundred-text {
+	color: #37474F;
 }
 
-.landing-page-panel-text {
-	font-weight: bold;
-	text-transform: uppercase;
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+.seven-hundred-bg {
+	background: #FAFAFA;
 }
 
-#hero-words{
-	color: rgba(255, 255, 255, 0.8);
-  font-size: 4em;
-  text-align: center;
-  font-weight: 700;
-  text-align: center;
-  text-transform: uppercase;
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+.seven-hundred-text {
+	color: #455A64;
+}
+
+.primary-bg {
+	background: #607D8B;
+}
+
+.accent-bg {
+	background: #69F0AE;
+}
+
+.accent-text-color {
+	color: #69F0AE;
+}
+
+#accent-color-header {
+	color: #69F0AE;
+}
+
+.show-news {
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .card {
@@ -47,22 +63,12 @@ nav {
 	width: 100%;
 }
 
-
 ul {
 	width: 100%;
 }
 
-
 .card-title {
-  color: red;
-}
-
-/*.card-action {
-  max-height: 2em;
-}*/
-
-.orange-text {
-	color: #F57C00;
+  color: #69F0AE;
 }
 
 span {
@@ -77,25 +83,6 @@ span {
 	max-width: 99.5%;
 }
 
-#hero-text {
-	text-align: center;
-  font-size: 2em;
-  color: rgba(239, 108, 0, 0.9);
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-#height-30 {
-	height: 100%;
-	width: 100%;
-}
-
-#main-page-bg {
-	background: url("/images/main-page-bg.jpg");
-	width: 100%;
-	height: 24em;
-	background-size: cover;
-}
-
 .pagination {
 	width: 100%;
 }
@@ -105,7 +92,7 @@ span {
     width: 100%;
     overflow: hidden;
     height: 4rem;
-    background-color: rgba(51, 51, 51, 0.5);
+    background-color: white;
     padding-left: 100%; // offsets items to begin
 }
 
@@ -118,17 +105,16 @@ span {
 }
 
 .ticker__item {
-
-    padding: 0 2rem;
-    font-size: 2rem;
-    color: white;
+  padding: 0 2rem;
+  font-size: 2rem;
+  color: #69F0AE;
 }
 
 .ticker {
     animation-name: ticker;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
-    animation-duration: 30s; // tweak based on number of items/desired speed
+    animation-duration: 35s; // tweak based on number of items/desired speed
 }
 
 @keyframes ticker {

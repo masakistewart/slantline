@@ -8,6 +8,4 @@ angular.module('pineNews', ['ngRoute', 'ngAnimate','angularMoment','angularUtils
 	.when('/search', {
 		templateUrl: '/views/partials/mainPage.html'
 	})
-
-	$locationProvider.html5Mode(true)
 })

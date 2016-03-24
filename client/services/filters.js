@@ -9,3 +9,16 @@ angular.module('pineNews')
 		return finalArr.join(',').replace(/[,]/g, " ")
 	}
 })
+.filter('titleFilter', function() {
+	return function(input) {
+		var titles = {
+			'guardian': 'The Guardian',
+			'fox': 'Fox News',
+			'aljazeera': 'Al Jazeera English',
+			'huffingtonpost': 'Huffington Post',
+			'nytimes': 'New York Times',
+			'cnn': 'CNN'
+		}
+		return titles[input]
+	}
+})

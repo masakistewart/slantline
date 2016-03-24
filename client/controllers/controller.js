@@ -1,5 +1,3 @@
-
-
 angular.module('pineNews')
 .controller('landingPageCtrl', function($http, $scope) {
 	$http.get('/api/recentNews').then(function(data) {

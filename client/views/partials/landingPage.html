@@ -2,13 +2,13 @@
 	<div class="col s12" ng-repeat="source in news.data">
 		<div class="card-panel">
 			<div class="card-panel">
-				<h5 class="orange-text center">{{source.source}}</h5>
+				<h5 class="eight-hundred-text center">{{source.source | titleFilter}}</h5>
 				<div class="ticker-wrap">
 				    <div class="ticker">
 				        <div class="ticker__item">{{source.sentence}}</div>
 				    </div>
 				</div>
-				<button class="show-news">Show Headlines</button>
+				<button class="show-news accent-bg btn">Show Headlines</button>
 			</div>
 		</div>
 	</div>

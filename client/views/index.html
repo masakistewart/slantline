@@ -1,37 +1,110 @@
 <!DOCTYPE html>
 <html ng-app="pineNews">
-<head>
-	<title>N.E.W.S</title>
-	<base href="/">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="/css/main.css">
-</head>
-<body>
-	<div class="navbar-fixed">
-		<nav class="white raised">
-			<div class="nav-wrapper">
-					<a href="/" class="brand-logo center red-text thin">Pineapple News</a>
-					<ul id="nav-mobile" class="left">
-		        <li><a class="red-text" href="/search">Search</a></li>
-		      </ul>
-			</div>
-		</nav>
-	</div>
 
-	<div ng-view>
+<head>
+    <title>N.E.W.S</title>
+    <base href="/">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+  <div class="navbar-fixed">
+      <nav class="eight-hundred-bg">
+          <div class="nav-wrapper">
+              <a href="/#/" id="accent-color-header" class="brand-logo center thin">NEWS</a>
+              <ul id="nav-mobile" class="left">
+                  <li><a class="accent-text-color" href="/#/search">Search</a></li>
+              </ul>
+          </div>
+      </nav>
+  </div>
+  <div class="m-app-loading" ng-animate-children>
+      <!--
+        I'm putting Style block inside directive so that it
+         will be removed from the DOM when we remove the directive container.
+     -->
+      <style type="text/css">
+      div.m-app-loading {
+          position: fixed;
+      }
+      
+      div.m-app-loading div.animated-container {
+          background-color: #333333;
+          bottom: 0px;
+          left: 0px;
+          opacity: 1.0;
+          position: fixed;
+          right: 0px;
+          top: 0px;
+          z-index: 999999;
+      }
+      /* Used to initialize the ng-leave animation state. */
+      
+      div.m-app-loading div.animated-container.ng-leave {
+          opacity: 1.0;
+          transition: all linear 200ms;
+          -webkit-transition: all linear 200ms;
+      }
+      /* Used to set the end properties of the ng-leave animation state. */
+      
+      div.m-app-loading div.animated-container.ng-leave-active {
+          opacity: 0;
+      }
+      
+      div.m-app-loading div.messaging {
+          color: #FFFFFF;
+          font-family: monospace;
+          left: 0px;
+          margin-top: -37px;
+          position: absolute;
+          right: 0px;
+          text-align: center;
+          top: 50%;
+      }
+      
+      div.m-app-loading h1 {
+          font-size: 26px;
+          line-height: 35px;
+          margin: 0px 0px 20px 0px;
+      }
+      
+      div.m-app-loading p {
+          font-size: 18px;
+          line-height: 14px;
+          margin: 0px 0px 0px 0px;
+      }
+      </style>
+      <!-- BEGIN: Actual animated container. -->
+		<div class="animated-container">
+		  <div class="messaging">
+		      <h1>
+		         App is Loading
+		     </h1>
+		      <p>
+		          Please stand by for your ticket to awesome-town!
+		      </p>
+		  </div>
+		</div>
+      <!-- END: Actual animated container. -->
 	</div>
-	<!-- Angular Material requires Angular.js Libraries -->
-	<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
-	<script src="/js/moment.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-route.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.0-beta.5/angular-moment.min.js"></script>
-	<script type="text/javascript" src="/appNG.js"></script>
-	<script type="text/javascript" src="/controllers/controller.js"></script>
-	<script type="text/javascript" src="/services/filters.js"></script>
-	<script type="text/javascript" src="/services/pagination.js"></script>
+    <div ng-view>
+    </div>
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="/js/moment.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-route.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.0-beta.5/angular-moment.min.js"></script>
+    <script type="text/javascript" src="/appNG.js"></script>
+    <script type="text/javascript" src="/services/dirLoading.js"></script>
+    <script type="text/javascript" src="/controllers/controller.js"></script>
+    <script type="text/javascript" src="/services/filters.js"></script>
+    <script type="text/javascript" src="/services/pagination.js"></script>
 </body>
+
 </html>
