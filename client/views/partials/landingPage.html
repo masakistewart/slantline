@@ -2,32 +2,13 @@
 	<div class="col s12" ng-repeat="source in news.data">
 		<div class="card-panel">
 			<div class="card-panel">
-				<h5 class="orange-text center">{{source[0].source}}</h5>
-			</div>
-			<div class="row">
-				<div ng-repeat="item in source" class="col m6 s12">
-					<div class="card">
-	          <div class="card-content white-text">
-	          <div class="scrolling-div">
-	            <span class="card-title">{{item.title | capitalize}}...</span>
-	          </div>
-	            <p>{{item.summary | limitTo: 200}}...</p><p>{{item.created_at | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a'}}</p>
-	          </div>
-	          <div class="card-action">
-	            <a class="waves-effect waves-light btn modal-trigger" href="modal{{item.id}}">More</a>
-	            <a href="{{item.link}}">{{item.source}}</a>
-	          </div>
-          </div>
-          <div id="modal{{item.id}}" class="modal">
-            <div class="modal-content">
-              <h4>Modal Header</h4>
-              <p>A bunch of text</p>
-            </div>
-            <div class="modal-footer">
-              <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
-            </div>
-	        </div>
+				<h5 class="orange-text center">{{source.source}}</h5>
+				<div class="ticker-wrap">
+				    <div class="ticker">
+				        <div class="ticker__item">{{source.sentence}}</div>
+				    </div>
 				</div>
+				<button class="show-news">Show Headlines</button>
 			</div>
 		</div>
 	</div>

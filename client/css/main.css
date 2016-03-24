@@ -36,10 +36,22 @@ nav {
 }
 
 .card {
-  min-height: 16em;
+  max-height: 19em;
+  min-height: 19em;
   background: #cecece;
+  width: 100%;
   overflow: hidden;
 }
+
+.pagination-control {
+	width: 100%;
+}
+
+
+ul {
+	width: 100%;
+}
+
 
 .card-title {
   color: red;
@@ -84,53 +96,49 @@ span {
 	background-size: cover;
 }
 
-.scrolling-div {
-  height: 4em;
-  width: 90%;
+.pagination {
+	width: 100%;
 }
 
-
-/* Side Scrolling Text */
-
-.example1 {
- height: 50px;  
- overflow: hidden;
- position: relative;
+.ticker-wrap {
+		display: none;
+    width: 100%;
+    overflow: hidden;
+    height: 4rem;
+    background-color: rgba(51, 51, 51, 0.5);
+    padding-left: 100%; // offsets items to begin
 }
 
-span.card-title {
- position: absolute;
- width: 50em;
- height: 100%;
- margin: 0;
- line-height: 1em;
- /* Starting position */
-/* -moz-transform:translateX(100%);
- -webkit-transform:translateX(100%);  
- transform:translateX(100%);*/
- /* Apply animation to this element */  
- -moz-animation: example1 8s linear infinite;
- -webkit-animation: example1 8s linear infinite;
- animation: example1 8s linear infinite;
+.ticker {
+    display: inline-block;
+    height: 4rem;
+    line-height: 4rem;
+    white-space: nowrap;
+    padding-right: 100%; // taken from container as display inline-block
 }
-/* Move it (define the animation) */
-@-moz-keyframes example1 {
- 0%   { -moz-transform: translateX(100%); }
- 100% { -moz-transform: translateX(-100%); }
+
+.ticker__item {
+
+    padding: 0 2rem;
+    font-size: 2rem;
+    color: white;
 }
-@-webkit-keyframes example1 {
- 0%   { -webkit-transform: translateX(100%); }
- 100% { -webkit-transform: translateX(-100%); }
+
+.ticker {
+    animation-name: ticker;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-duration: 30s; // tweak based on number of items/desired speed
 }
-@keyframes example1 {
- 0%   { 
- -moz-transform: translateX(100%); /* Firefox bug fix */
- -webkit-transform: translateX(100%); /* Firefox bug fix */
- transform: translateX(100%);     
- }
- 100% { 
- -moz-transform: translateX(-100%); /* Firefox bug fix */
- -webkit-transform: translateX(-100%); /* Firefox bug fix */
- transform: translateX(-100%); 
- }
+
+@keyframes ticker {
+    0% {
+        -webkit-transform: translate3d(0, 0, 0);
+                transform: translate3d(0, 0, 0);
+
+    }
+    100% {
+        -webkit-transform: translate3d(-100%, 0, 0);
+                transform: translate3d(-100%, 0, 0);
+    }
 }

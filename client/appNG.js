@@ -1,4 +1,4 @@
-angular.module('pineNews', ['ngRoute', 'ngAnimate','angularMoment'])
+angular.module('pineNews', ['ngRoute', 'ngAnimate','angularMoment','angularUtils.directives.dirPagination'])
 .config(function($routeProvider, $locationProvider) {
 	$routeProvider
 	.when('/', {
@@ -6,8 +6,7 @@ angular.module('pineNews', ['ngRoute', 'ngAnimate','angularMoment'])
 		controller: 'landingPageCtrl'
 	})
 	.when('/search', {
-		templateUrl: '/views/partials/mainPage.html',
-		controller: 'searchCtrl'
+		templateUrl: '/views/partials/mainPage.html'
 	})
 
 	$locationProvider.html5Mode(true)

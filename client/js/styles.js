@@ -2,11 +2,15 @@
  $(document).ready(function(){
   // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
   setTimeout(function() {
-  	$('a').click(function(event) {
-  		event.preventDefault();
-  		$('.modal-trigger').leanModal();
-  	});
+    $('button.show-news').closest("div").children[1];
+    $('button.show-news').click(function() {
+      $(this).siblings(".ticker-wrap").fadeToggle()
+    });
   }, 500);
+
+  $('form').on('submit', function(event) {
+    event.preventDefault();
+  })
 
   var lastScrollTop = 0;
 

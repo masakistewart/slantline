@@ -50,7 +50,7 @@ def getHeadlines(name):
 
 
 def insertIntoNewsTable(arr):
-    print(arr)
+    # print(arr)
     for item in arr:
         r = requests.post('http://localhost:8000/api/addNews', data=item)
 
