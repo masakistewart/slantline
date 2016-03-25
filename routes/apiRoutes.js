@@ -61,9 +61,9 @@ router.get('/recentNews', function(req, res) {
   	pythonPath: '/usr/local/bin/python3',
   	scriptPath: __dirname + '/../pyScraping/'
 	};
-	pythonShell.run("nodejs-integration.py", options, function(err, result) {
-		console.log(err, result)
-	})
+	// pythonShell.run("nodejs-integration.py", options, function(err, result) {
+	// 	console.log(err, result)
+	// })
 
 });
 
