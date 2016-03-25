@@ -1,0 +1,35 @@
+
+<div class="card-panel grey lighten-3">
+  <div class="row">
+    <div class="col s12">
+      <div class="container">
+        <h2>{{item[0].data[0].title}}</h2>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col s8">
+      <div class="container">
+        <p>{{item[0].data[0].summary}}</p>
+      </div>
+    </div>
+    <div class="col s4 side-bar">
+    <table class="highlight">
+      <thead>
+        <tr>
+          <th>Source: </th>
+          <th>Date Added:</th>
+          <th>Link:</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{item[0].data[0].source | titleFilter}}</td>
+          <td>{{item[0].data[0].created_at | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a'}}</td>
+          <td>{{item[0].data[0].link}}</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>

@@ -11,4 +11,9 @@ angular.module('pineNews', ['ngRoute', 'ngAnimate','angularMoment','angularUtils
 	.when('/searchAll', {
 		templateUrl: '/views/partials/searchAll.html'
 	})
-})
+	.when('/news/:id', {
+		templateUrl: '/views/partials/story.html',
+		controller: 'newsCtrl'
+	})
+	// $locationProvider.html5Mode(true);
+});

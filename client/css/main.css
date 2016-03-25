@@ -63,6 +63,11 @@ nav {
 	width: 100%;
 }
 
+.side-bar {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 ul {
 	width: 100%;
 }
@@ -197,4 +202,46 @@ span {
     to {
         left:100%;
     }
+}
+
+/* Staggering Animations */
+
+.ng-enter {
+  -webkit-transition-delay:0.2s;
+  transition-delay:0.2s;
+
+  -webkit-transition-duration:0;
+  transition-duration:0;
+}
+
+.ng-enter-stagger,
+.ng-leave-stagger,
+.ng-move-stagger {
+  /* 200ms will be applied between each sucessive enter operation */ 
+  -webkit-transition-delay:0.2s;
+  transition-delay:0.2s;
+}
+
+.ng-enter,
+.ng-leave,
+.ng-move {
+  -webkit-transition: 0.5s linear all;
+  transition:0.5s linear all;
+}
+
+.ng-leave.ng-leave-active,
+.ng-enter,
+.ng-move {
+  -webkit-transition: 0.5s linear all;
+  transition: 0.5s linear all;
+
+  opacity:0;
+  line-height:0;
+}
+
+.ng-leave,
+.ng-move.ng-move-active,
+.ng-enter.ng-enter-active {
+  opacity: 1;
+  line-height: 20px;
 }

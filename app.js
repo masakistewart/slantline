@@ -1,12 +1,12 @@
 // DEV MODULES
-var express 		= require('express');
-var app 			= express();
-var port 			= process.env.PORT || 8000;
-var knex 			= require('./db/knex.js');
+var express 			= require('express');
+var app 					= express();
+var port 					= process.env.PORT || 8000;
+var knex 					= require('./db/knex.js');
 var apiRoutes 		= require('./routes/apiRoutes.js');
 var angularRoutes	= require('./routes/angularRoutes.js');
 // MIDDLEWARE MODULES
-var morgan			= require('morgan');
+var morgan				= require('morgan');
 var bodyParser		= require('body-parser');
 // MIDDLEWARE Initiation
 app.use(express.static(__dirname + '/client'));

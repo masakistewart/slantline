@@ -47,3 +47,13 @@ angular.module('pineNews')
 	  console.log('going to page ' + num);
 	}
 })
+.controller('newsCtrl', function($scope, $http, $routeParams) {
+	console.log('hit')
+	$http.get('/api/news/' + $routeParams.id).then(function(data1) {
+		console.log('step1')
+		$http.get('/api/agency/' + data1.data[0].source).then(function(data2) {
+			$scope.item = [data1, data2];
+			console.log($scope.item)
+		})
+	})
+})

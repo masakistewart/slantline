@@ -2,7 +2,9 @@ var express 		= require('express');
 var router 			= express.Router();
 var knex 				= require('../db/knex.js');
 var pythonShell	= require('python-shell');
-var pg = require('pg');
+var pg 					= require('pg');
+
+
 function ts_news(query, res) {
 	var connectionConfig = process.env.DATABASE_URL || 'postgres://localhost:5432/pythonTestDB';
 	var client = new pg.Client(connectionConfig);
@@ -13,7 +15,7 @@ function ts_news(query, res) {
     results.push(row);
   });
 
-	query.on('end', function() { 
+	query.on('end', function() {
 		res.json(results);
 		client.end();
 	});
@@ -61,9 +63,9 @@ router.get('/recentNews', function(req, res) {
   	pythonPath: '/usr/local/bin/python3',
   	scriptPath: __dirname + '/../pyScraping/'
 	};
-	// pythonShell.run("nodejs-integration.py", options, function(err, result) {
-	// 	console.log(err, result)
-	// })
+	pythonShell.run("nodejs-integration.py", options, function(err, result) {
+		console.log(err, result)
+	})
 
 });
 
@@ -86,6 +88,18 @@ router.get('/recentNewsStories',function(req,res) {
   	});
   });
  });
+
+router.get('/news/:id',function(req,res) {
+  knex.select('*').from('news').where('id', '=', req.params.id).then(function(data) {
+  	res.json(data);
+  });
+});
+
+router.get('/agency/:source',function(req,res) { 
+  knex('news').count('source').where('source', '=', req.params.source).then(function(data) {
+  	res.json(data)
+  });
+});
 
 router.post('/addNews',function(req,res) {
   if(!req.body) return res.sendStatus(400)
