@@ -12,12 +12,13 @@ def cleanhtml(raw_html):
 
 
 newsFeeds = {
-    'aljazeera': 'http://america.aljazeera.com/content/ajam/articles.rss',
+    'aljazeera': 'http://www.aljazeera.com/xml/rss/all.xml',
     'cnn': "http://rss.cnn.com/rss/cnn_world.rss",
     'guardian': "http://www.theguardian.com/world/rss",
     'fox': "http://feeds.foxnews.com/foxnews/world",
     'huffingtonpost': "http://feeds.huffingtonpost.com/c/35496/f/677102/index.rss",
-    'nytimes': "http://rss.nytimes.com/services/xml/rss/nyt/World.xml"
+    'nytimes': "http://rss.nytimes.com/services/xml/rss/nyt/World.xml",
+    'reuters': "http://feeds.reuters.com/Reuters/worldNews"
 }
 
 

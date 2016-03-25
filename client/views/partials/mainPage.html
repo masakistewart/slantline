@@ -1,18 +1,5 @@
-<nav class="seven-hundred-bg">
-	<div class="nav-wrapper">
-	  <form>
-	    <div class="input-field">
-	      <input id="search" type="search" required>
-	      <label for="search"><i class="material-icons">search</i></label>
-	      <i class="material-icons">close</i>
-	    </div>
-	  </form>
-	</div>
-</nav>
-
 <div class="row" ng-controller="searchResultsCtrl">
 	<div class="col s12" ng-repeat="source in news.items">
-		<div class="card-panel">
 			<div class="card-panel">
 				<h5 class="accent-text-color center">{{source[0].source | titleFilter}}</h5>
 				<form class="">
@@ -38,13 +25,12 @@
 	          </div>
           </div>
 	        </li>
-	        <div class="row pagination-control">
+	        <div class="row card-panel pagination-control">
 		        <div ng-controller="OtherController" class="other-controller col s12">
 	          <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="/services/dirPagination.tpl.html" pagination-id="source[0].source"></dir-pagination-controls>
 	        </div>
         </div>
 				</ul>
-		</div>
 	</div>
 </div>
 

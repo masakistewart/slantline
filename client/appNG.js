@@ -8,4 +8,7 @@ angular.module('pineNews', ['ngRoute', 'ngAnimate','angularMoment','angularUtils
 	.when('/search', {
 		templateUrl: '/views/partials/mainPage.html'
 	})
+	.when('/searchAll', {
+		templateUrl: '/views/partials/searchAll.html'
+	})
 })

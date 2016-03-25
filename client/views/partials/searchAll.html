@@ -1,0 +1,39 @@
+<div ng-controller="searchAllCtrl">
+	<nav class="seven-hundred-bg">
+		<div class="nav-wrapper">
+		  <form ng-submit="searchAll(searchQuery)">
+		    <div class="input-field">
+		      <input ng-model="searchQuery" id="search" type="search">
+		      <label for="search"><i class="material-icons">search</i></label>
+		      <i class="material-icons">close</i>
+		    </div>
+		  </form>
+		</div>
+	</nav>
+
+	<div id="main-search" class="card-panel" ng-show="showSecondaryBar">
+			  <form>
+			    <div class="input-field">
+			      <input ng-model="filterSearch" id="search" type="search">
+			      <label for="search"><i class="material-icons">search</i></label>
+			      <i class="material-icons">close</i>
+			    </div>
+			  </form>
+		<ul>
+			<li dir-paginate="item in data | filter: filterSearch |itemsPerPage: 10" pagination-id="thing" current-page="currentPage" >
+				<div>
+					<div class="card-panel">
+						<h3>{{item.title}}</h3>
+						<p>{{item.summary}}</p>
+						<br>
+						<p>{{item.created_at | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a'}} </p>
+					</div>
+				</div>
+			</li>
+			<div ng-controller="OtherController" class="other-controller col s12">
+	    	<dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="/services/dirPagination.tpl.html" pagination-id="thing"></dir-pagination-controls>
+			</div>
+		</ul>
+	</div>
+</div>
+<script src="/js/styles.js"></script>

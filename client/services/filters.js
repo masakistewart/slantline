@@ -17,7 +17,8 @@ angular.module('pineNews')
 			'aljazeera': 'Al Jazeera English',
 			'huffingtonpost': 'Huffington Post',
 			'nytimes': 'New York Times',
-			'cnn': 'CNN'
+			'cnn': 'CNN',
+			'reuters': 'Reuters'
 		}
 		return titles[input]
 	}

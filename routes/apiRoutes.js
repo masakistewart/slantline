@@ -35,19 +35,21 @@ router.get('/recentNews', function(req, res) {
 				knex.select("title", "created_at", "source").from("news").where('source', "=", "huffingtonpost").orderBy('created_at', 'desc').limit(4).then(function(data4) {
 					knex.select("title", "created_at", "source").from("news").where('source', "=", "cnn").orderBy('created_at', 'desc').limit(4).then(function(data5) {
 						knex.select("title", "created_at", "source").from("news").where('source', "=", "aljazeera").orderBy('created_at', 'desc').limit(4).then(function(data6) {
-							res.setHeader('Content-Type', "application/json");
-							var formattedArr = []
-							var dataArr = [data1,data2,data3,data4,data5,data6];
-							for (var i = 0; i < dataArr.length; i++) {
-								var item = {}
-								item.sentence = ""
-								for (var j = 0; j < dataArr[j].length; j++) {
-									item.sentence += dataArr[i][j].title + " - " + dataArr[i][j].created_at + " - ";
-									item.source = dataArr[i][j].source
+							knex.select("title", "created_at", "source").from("news").where('source', "=", "reuters").orderBy('created_at', 'desc').limit(4).then(function(data7) {
+								res.setHeader('Content-Type', "application/json");
+								var formattedArr = []
+								var dataArr = [data1,data2,data3,data4,data5,data6,data7];
+								for (var i = 0; i < dataArr.length; i++) {
+									var item = {}
+									item.sentence = ""
+									for (var j = 0; j < dataArr[j].length; j++) {
+										item.sentence += dataArr[i][j].title + " - " + dataArr[i][j].created_at + " - ";
+										item.source = dataArr[i][j].source
+									}
+									formattedArr.push(item);
 								}
-								formattedArr.push(item);
-							}
-							res.json(formattedArr);
+								res.json(formattedArr);
+							});
 						});
 					});
 				});
@@ -72,9 +74,11 @@ router.get('/recentNewsStories',function(req,res) {
   			knex.select("*").from("news").where('source', "=", "huffingtonpost").orderBy('created_at', 'desc').then(function(data4) {
   				knex.select("*").from("news").where('source', "=", "cnn").orderBy('created_at', 'desc').then(function(data5) {
   					knex.select("*").from("news").where('source', "=", "aljazeera").orderBy('created_at', 'desc').then(function(data6) {
-  						res.setHeader('Content-Type', "application/json");
-  						var dataArr = [data1,data2,data3,data4,data5,data6];
-  						res.json(dataArr)
+  						knex.select("*").from("news").where('source', "=", "reuters").orderBy('created_at', 'desc').then(function(data7) {
+	  						res.setHeader('Content-Type', "application/json");
+	  						var dataArr = [data1,data2,data3,data4,data5,data6,data7];
+	  						res.json(dataArr)
+	  					});
   					});
   				});
   			});

@@ -6,7 +6,7 @@
     $('button.show-news').click(function() {
       $(this).siblings(".ticker-wrap").fadeToggle()
     });
-  }, 500);
+  }, 300);
 
   $('form').on('submit', function(event) {
     event.preventDefault();

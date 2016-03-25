@@ -4,9 +4,11 @@ angular.module('pineNews')
 		$scope.news = data;
 		console.log(data)
 	});
-}).controller('mainPageCtrl', function($http, $scope) {
+})
+.controller('mainPageCtrl', function($http, $scope) {
 
-}).controller('searchResultsCtrl', function($scope, $http) {
+})
+.controller('searchResultsCtrl', function($scope, $http) {
 	$scope.news = {};
 	$scope.itemNumber = 4;
 	$scope.currentPage = 1;
@@ -21,16 +23,27 @@ angular.module('pineNews')
 		$scope.news.hidden = false;
 		console.log(data)
 	});
-
-	$scope.getNews = function(word) {
-		$http.get('/api/search/' + word).then(function(data) {
-			$scope.searchResults = data;
-			$scope.new.hidden = true;
-			console.log(data)
-		})
-	}
-}).controller('OtherController', function ($scope) {
+})
+.controller('OtherController', function ($scope) {
   $scope.pageChangeHandler = function(num) {
     console.log('going to page ' + num);
   }
-});
+})
+.controller('searchAllCtrl', function($scope, $http) {
+	$scope.showSecondaryBar = false;
+	$scope.news = {};
+	$scope.itemNumber = 4;
+	$scope.currentPage = 1;
+  $scope.pageSize = 1;
+	$scope.searchAll = function(query) {
+		$http.get('/api/search/'+ query).then(function(data) {
+			console.log(data)
+			$scope.data = data.data
+			$scope.showSecondaryBar = true;
+		})
+	}
+
+	$scope.pageChangeHandler = function(num) {
+	  console.log('going to page ' + num);
+	}
+})

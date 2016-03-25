@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html ng-app="pineNews">
-
 <head>
     <title>N.E.W.S</title>
     <base href="/">
@@ -16,7 +15,8 @@
           <div class="nav-wrapper">
               <a href="/#/" id="accent-color-header" class="brand-logo center thin">NEWS</a>
               <ul id="nav-mobile" class="left">
-                  <li><a class="accent-text-color" href="/#/search">Search</a></li>
+                  <li><a class="accent-text-color" href="/#/search">Search by news agency</a></li>
+                  <li><a href="/#/searchAll" class="accent-text-color">Search all news</a></li>
               </ul>
           </div>
       </nav>
@@ -30,7 +30,7 @@
       div.m-app-loading {
           position: fixed;
       }
-      
+
       div.m-app-loading div.animated-container {
           background-color: #333333;
           bottom: 0px;
@@ -42,18 +42,18 @@
           z-index: 999999;
       }
       /* Used to initialize the ng-leave animation state. */
-      
+
       div.m-app-loading div.animated-container.ng-leave {
           opacity: 1.0;
-          transition: all linear 200ms;
-          -webkit-transition: all linear 200ms;
+          transition: all linear 900ms;
+          -webkit-transition: all linear 900ms;
       }
       /* Used to set the end properties of the ng-leave animation state. */
-      
+
       div.m-app-loading div.animated-container.ng-leave-active {
           opacity: 0;
       }
-      
+
       div.m-app-loading div.messaging {
           color: #FFFFFF;
           font-family: monospace;
@@ -64,13 +64,13 @@
           text-align: center;
           top: 50%;
       }
-      
+
       div.m-app-loading h1 {
           font-size: 26px;
           line-height: 35px;
           margin: 0px 0px 20px 0px;
       }
-      
+
       div.m-app-loading p {
           font-size: 18px;
           line-height: 14px;
