@@ -7,6 +7,7 @@ angular.module('pineNews')
 })
 .controller('MainController', function($http, $scope, $location, UserFactory, AuthTokenFactory) {
 	getLoginStatus();
+	$http.get('/api/getFavorites')
 	$scope.login = login;
 	$scope.signup = signUp;
 	$scope.logout = logout;

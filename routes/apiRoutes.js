@@ -59,6 +59,7 @@ router.get('/recentNews', function(req, res) {
 		});
 	});
 
+
 	var options = {
   	pythonPath: '/usr/local/bin/python3',
   	scriptPath: __dirname + '/../pyScraping/'
@@ -68,6 +69,18 @@ router.get('/recentNews', function(req, res) {
 	})
 
 });
+
+router.get('/getFavorites',function(req,res) { 
+	var token = req.headers.authorization.split(' ')[1]
+  var user = parseToken(token)
+  console.log(user)
+});
+
+function parseToken(token) {
+	  	var base64Url = token.split('.')[1];
+	  	var base64 = base64Url.replace('-', '+').replace('_', '/');
+	  	return JSON.parse(window.atob(base64));
+		}
 
 router.get('/recentNewsStories',function(req,res) { 
   knex.select("*").from("news").where('source', "=", "guardian").orderBy('created_at', 'desc').then(function(data1) {
