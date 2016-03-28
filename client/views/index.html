@@ -9,18 +9,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 
-<body>
-  <div class="navbar-fixed">
-      <nav class="eight-hundred-bg">
-          <div class="nav-wrapper">
-              <a href="/#/" id="accent-color-header" class="brand-logo center thin">NEWS</a>
-              <ul id="nav-mobile" class="left">
-                  <li><a class="accent-text-color" href="/#/search">Search by news agency</a></li>
-                  <li><a href="/#/searchAll" class="accent-text-color">Search all news</a></li>
-              </ul>
-          </div>
-      </nav>
-  </div>
+<body ng-controller="MainController">
+  <nav class="eight-hundred-bg">
+    <div class="nav-wrapper">
+    <div class="container">
+      <a href="/#/" id="accent-color-header" ng-hide="!user" class="brand-logo thin">NEWS for {{user.name}}</a>
+      <a href="/#/" id="accent-color-header" ng-show="!user" class="brand-logo thin">NEWS</a>
+      <a href="#" data-activates="mobile-demo" class="button-collapse accent-text-color"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a class="accent-text-color" ng-show="!user" href="/#/signup">Sign Up</a></li>
+        <li><a class="accent-text-color" ng-show="!user" href="/#/login">Log In</a></li>
+        <li><a class="accent-text-color" ng-show="user"  href="/#/" ng-click="logout()">Logout</a></li>
+        <li><a class="accent-text-color" ng-show="user"  href="/#/recentnews">Recent News</a></li>
+        <li><a class="accent-text-color" ng-show="user"  href="/#/search">Search</a></li>
+      </ul>
+    </div>
+      <ul class="side-nav" id="mobile-demo">
+        <li><a class="accent-text-color" ng-show="!user" href="/#/signup">Sign Up</a></li>
+        <li><a class="accent-text-color" ng-show="!user" href="/#/login">Log In</a></li>
+        <li><a class="accent-text-color" ng-show="user"  href="/#/" ng-click="logout()">Logout</a></li>
+        <li><a class="accent-text-color" ng-show="user"  href="/#/recentnews">Recent News</a></li>
+        <li><a class="accent-text-color" ng-show="user"  href="/#/search">Search</a></li>
+      </ul>
+    </div>
+  </nav>
+
   <div class="m-app-loading" ng-animate-children>
       <!--
         I'm putting Style block inside directive so that it
@@ -81,10 +94,10 @@
 		<div class="animated-container">
 		  <div class="messaging">
 		      <h1>
-		         App is Loading
+		         News is being reported on!
 		     </h1>
 		      <p>
-		          Please stand by for your ticket to awesome-town!
+		          I Gots News For You!!!!
 		      </p>
 		  </div>
 		</div>
@@ -95,14 +108,15 @@
     <!-- Angular Material requires Angular.js Libraries -->
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
     <script src="/js/moment.js"></script>
+    <script src="/js/styles.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-route.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.0-beta.5/angular-moment.min.js"></script>
     <script type="text/javascript" src="/appNG.js"></script>
-    <script type="text/javascript" src="/services/dirLoading.js"></script>
     <script type="text/javascript" src="/controllers/controller.js"></script>
+    <script type="text/javascript" src="/services/dirLoading.js"></script>
     <script type="text/javascript" src="/services/filters.js"></script>
     <script type="text/javascript" src="/services/pagination.js"></script>
 </body>
