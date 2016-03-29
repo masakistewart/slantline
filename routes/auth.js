@@ -8,7 +8,7 @@ require('dotenv').load();
 // Create Token Function
 
 function createToken(user) {
-	return jwt.sign({id: user.id, name: user.name}, 'TESTING');
+	return jwt.sign({id: user.id, name: user.name}, 'sannbfldaskjdbgsadgflfgyaoweghb231y5hsjafbashjk');
 }
 
 router.post('/login',function(req,res) {

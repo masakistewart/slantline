@@ -17,8 +17,7 @@ newsFeeds = {
     'guardian': "http://www.theguardian.com/world/rss",
     'fox': "http://feeds.foxnews.com/foxnews/world",
     'huffingtonpost': "http://feeds.huffingtonpost.com/c/35496/f/677102/index.rss",
-    'nytimes': "http://rss.nytimes.com/services/xml/rss/nyt/World.xml",
-    'reuters': "http://feeds.reuters.com/Reuters/worldNews"
+    'nytimes': "http://rss.nytimes.com/services/xml/rss/nyt/World.xml"
 }
 
 
@@ -29,11 +28,6 @@ def getAll(array):
         for item in subList:
             allTheNews.append(item)
     return allTheNews
-
-
-def forFox(data):
-    return data[0]["feedburner_origlink"]
-
 
 def getHeadlines(name):
     target = newsFeeds[name]
@@ -51,10 +45,19 @@ def getHeadlines(name):
 
 
 def insertIntoNewsTable(arr):
-    # print(arr)
+    try:
+        conn = psycopg2.connect("dbname=pythonTestDB user=MasakiStewart")
+    except:
+        print("I am unable to connect to the database")
+    con= conn.cursor()
     for item in arr:
-        r = requests.post('http://localhost:8000/api/addNews', data=item)
-
+        sql = "INSERT INTO news (title, summary, source, link) VALUES (%s, %s, %s, %s);"
+        data = (item["title"], item["summary"], item["source"], item["link"])
+        con.execute(sql, data)
+    print("done")
+    conn.commit()
+    con.close()
+    conn.close()
 
 def getDbEntries(tableName):
     try:
@@ -83,12 +86,11 @@ def addIfDoesNotExist(tableName):
     for headline in allTheNews:
         try:
             middleMan[headline["title"]]
-            print("entry exists")
+            # print("entry exists")
         except:
             unique.append(headline)
             counter += 1
-    print(counter)
-    insertIntoNewsTable(unique)
+            insertIntoNewsTable(unique)
 
 
 addIfDoesNotExist("news")

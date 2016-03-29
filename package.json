@@ -18,6 +18,7 @@
   "homepage": "https://github.com/masakistewart/slantline#readme",
   "dependencies": {
     "angular-utils-pagination": "^0.11.0",
+    "atob": "^2.0.0",
     "bcrypt": "^0.8.5",
     "body-parser": "^1.15.0",
     "cors": "^2.7.1",
@@ -27,6 +28,7 @@
     "knex": "^0.10.0",
     "method-override": "^2.3.5",
     "morgan": "^1.7.0",
+    "multiline": "^1.0.2",
     "path": "^0.12.7",
     "pg": "^4.5.1",
     "python-shell": "^0.4.0"

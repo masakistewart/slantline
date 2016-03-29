@@ -1,0 +1,28 @@
+<div ng-show="user">
+<div class="card-panel">
+	<h2 class="center thin">Favorites</h2>
+</div>
+	<ul>
+		<li ng-repeat="item in favorites">
+			<div>
+				<div class="card-panel">
+					<h3>{{item.title}}</h3>
+					<p>{{item.summary | limitTo:300}}</p>
+					<br>
+					<p>{{item.created_at | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a'}} </p>
+					<div class="card-action">
+					  <a class="waves-effect waves-light btn modal-trigger accent-bg" href="/#/news/{{item.id}}">More</a>
+					  <a class="btn accent-bg" href="{{item.link}}">{{item.source}}</a>
+					</div>
+				</div>
+			</div>
+		</li>
+	</ul>
+</div>
+<div ng-show="!user" class="container main-panel">
+	<div class="card-panel">
+	  <h3 class="accent-text-color">Error:</h3>
+	  <p>Sorry, you do not have access to this section. Please Log In.</p>
+	  <a class="btn" href="/">Back</a> <a class="btn" href="/#/login">Log In</a>
+	</div>
+</div>

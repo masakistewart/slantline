@@ -51,24 +51,33 @@ nav {
     margin-right: auto;
 }
 
-div.banner {
+
+.frame {
     width: 100%;
     min-height: 30em;
-    top: 10em;
     background: url(https://media.licdn.com/media//AAEAAQAAAAAAAAJcAAAAJDFjMjdhNmUwLTM0ZWUtNDNmZS1hMDE4LTgxMzJiYzUyYzM4ZQ.jpg);
     background-size: cover;
     background-position: 0 8%;
     background-attachment: fixed;
-    vertical-align: all;
+    position: relative;
+    white-space: nowrap;
+
+    text-align: center;
 }
 
-#newsIcon {
+.helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+img  {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 4em;
     border: 1em solid #CECECE;
-    border-radius: 15%;
+    border-radius: 1px;
+    vertical-align: middle;
 }
 
 .card {
@@ -188,71 +197,4 @@ span {
     to {
         left: 0;
     }
-}
-
-.ng-leave {
-    -webkit-animation: 1.5s anim_leave;
-    -moz-animation: 1.5s anim_leave;
-    -o-animation: 1.5s anim_leave;
-    animation: 1.5s anim_leave;
-    position: relative;
-}
-
-@keyframes anim_leave {
-    from {
-        left: 0;
-    }
-    to {
-        left: 100%;
-    }
-}
-
-@-webkit-keyframes anim_leave {
-    from {
-        left: 0;
-    }
-    to {
-        left: 100%;
-    }
-}
-
-
-/* Staggering Animations */
-
-.ng-enter {
-    -webkit-transition-delay: 0.2s;
-    transition-delay: 0.2s;
-    -webkit-transition-duration: 0;
-    transition-duration: 0;
-}
-
-.ng-enter-stagger,
-.ng-leave-stagger,
-.ng-move-stagger {
-    /* 200ms will be applied between each sucessive enter operation */
-    -webkit-transition-delay: 0.2s;
-    transition-delay: 0.2s;
-}
-
-.ng-enter,
-.ng-leave,
-.ng-move {
-    -webkit-transition: 0.5s linear all;
-    transition: 0.5s linear all;
-}
-
-.ng-leave.ng-leave-active,
-.ng-enter,
-.ng-move {
-    -webkit-transition: 0.5s linear all;
-    transition: 0.5s linear all;
-    opacity: 0;
-    line-height: 0;
-}
-
-.ng-leave,
-.ng-move.ng-move-active,
-.ng-enter.ng-enter-active {
-    opacity: 1;
-    line-height: 20px;
 }

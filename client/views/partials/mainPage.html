@@ -1,4 +1,4 @@
-<div class="row" ng-controller="MainPageCtrl">
+<div ng-show="user" class="row" ng-controller="MainPageCtrl">
 	<div ng-hide="news.items[0]">
 		<div class="card white">
       <div class="card-content grey-text">
@@ -44,4 +44,11 @@
       </div>
 			</ul>
 	</div>
+</div>
+<div ng-show="!user" class="container main-panel">
+  <div class="card-panel">
+    <h3 class="accent-text-color">Error:</h3>
+    <p>Sorry, you do not have access to this section. Please Log In.</p>
+    <a class="btn" href="/#/">Back</a> <a class="btn" href="/#/login">Log In</a>
+  </div>
 </div>

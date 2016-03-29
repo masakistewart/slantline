@@ -3,6 +3,8 @@ var router 			= express.Router();
 var knex 				= require('../db/knex.js');
 var pythonShell	= require('python-shell');
 var pg 					= require('pg');
+var atob 				= require('atob');
+var multiline 	= require('multiline');
 
 
 function ts_news(query, res) {
@@ -24,10 +26,14 @@ function ts_news(query, res) {
 
 
 router.get('/allNews',function(req,res) {
-	knex.select('title', 'summary', 'source', 'created_at').from('news').then(function(data) {
-		res.setHeader('Content-Type', 'application/json');
-		res.json(data);
-	});
+	if(req.headers.authorization) {
+		knex.select('title', 'summary', 'source', 'created_at').from('news').then(function(data) {
+			res.setHeader('Content-Type', 'application/json');
+			res.json(data);
+		});
+	} else {
+		res.json({err: 'not logged in'});
+	}
 });
 
 router.get('/recentNews', function(req, res) {
@@ -70,37 +76,70 @@ router.get('/recentNews', function(req, res) {
 
 });
 
-router.get('/getFavorites',function(req,res) { 
-	var token = req.headers.authorization.split(' ')[1]
-  var user = parseToken(token)
-  console.log(user)
+router.get('/addFavorites/:id',function(req,res) {
+	var newsId = req.params.id;
+	var favorited_at = Date.now();
+	if(req.headers.authorization) {
+		var token = req.headers.authorization.split(' ')[1];
+  	var user = parseToken(token);
+  	console.log(user);
+  	knex('favorites').insert({user_id: user.id, news_id: newsId}).then(function() {
+  		res.send('done')
+  	});
+	}
+});
+
+router.get('/getFavorites/:id',function(req,res) { 
+  	if(req.headers.authorization) {
+  		var token = req.headers.authorization.split(' ')[1];
+    	var user = parseToken(token);
+    	var connectionConfig = process.env.DATABASE_URL || 'postgres://localhost:5432/pythonTestDB';
+  		var client = new pg.Client(connectionConfig);
+  		client.connect();
+  		var results = [];
+  		var query = client.query("select * from favorites inner join users on users.id = favorites.user_id inner join news on favorites.news_id = news.id where users.id = " + user.id + ";");
+
+  		query.on('row', function(row) {
+  	    results.push(row);
+  	  });
+
+  		query.on('end', function() {
+  			res.json(results);
+  			client.end();
+  		});
+  	}
 });
 
 function parseToken(token) {
-	  	var base64Url = token.split('.')[1];
-	  	var base64 = base64Url.replace('-', '+').replace('_', '/');
-	  	return JSON.parse(window.atob(base64));
-		}
+	var base64Url = token.split('.')[1];
+	var base64 = base64Url.replace('-', '+').replace('_', '/');
+	return JSON.parse(atob(base64));
+}
 
-router.get('/recentNewsStories',function(req,res) { 
-  knex.select("*").from("news").where('source', "=", "guardian").orderBy('created_at', 'desc').then(function(data1) {
-  	knex.select("*").from("news").where('source', "=", "fox").orderBy('created_at', 'desc').then(function(data2) {
-  		knex.select("*").from("news").where('source', "=", "nytimes").orderBy('created_at', 'desc').then(function(data3) {
-  			knex.select("*").from("news").where('source', "=", "huffingtonpost").orderBy('created_at', 'desc').then(function(data4) {
-  				knex.select("*").from("news").where('source', "=", "cnn").orderBy('created_at', 'desc').then(function(data5) {
-  					knex.select("*").from("news").where('source', "=", "aljazeera").orderBy('created_at', 'desc').then(function(data6) {
-  						knex.select("*").from("news").where('source', "=", "reuters").orderBy('created_at', 'desc').then(function(data7) {
-	  						res.setHeader('Content-Type', "application/json");
-	  						var dataArr = [data1,data2,data3,data4,data5,data6,data7];
-	  						res.json(dataArr)
+router.get('/recentNewsStories',function(req,res) {
+	console.log(req.headers.authorization)
+	if(req.headers.authorization) {
+		knex.select("*").from("news").where('source', "=", "guardian").orderBy('created_at', 'desc').then(function(data1) {
+	  	knex.select("*").from("news").where('source', "=", "fox").orderBy('created_at', 'desc').then(function(data2) {
+	  		knex.select("*").from("news").where('source', "=", "nytimes").orderBy('created_at', 'desc').then(function(data3) {
+	  			knex.select("*").from("news").where('source', "=", "huffingtonpost").orderBy('created_at', 'desc').then(function(data4) {
+	  				knex.select("*").from("news").where('source', "=", "cnn").orderBy('created_at', 'desc').then(function(data5) {
+	  					knex.select("*").from("news").where('source', "=", "aljazeera").orderBy('created_at', 'desc').then(function(data6) {
+	  						knex.select("*").from("news").where('source', "=", "reuters").orderBy('created_at', 'desc').then(function(data7) {
+		  						res.setHeader('Content-Type', "application/json");
+		  						var dataArr = [data1,data2,data3,data4,data5,data6,data7];
+		  						res.json(dataArr);
+		  					});
 	  					});
-  					});
-  				});
-  			});
-  		});
-  	});
-  });
- });
+	  				});
+	  			});
+	  		});
+	  	});
+	  });
+	} else {
+		res.json({err: 'Not Logged In'})
+	}
+});
 
 router.get('/news/:id',function(req,res) {
   knex.select('*').from('news').where('id', '=', req.params.id).then(function(data) {
@@ -117,9 +156,10 @@ router.get('/agency/:source',function(req,res) {
 router.post('/addNews',function(req,res) {
   if(!req.body) return res.sendStatus(400)
 	res.send("thank you")
-  knex('news').insert(req.body).then(function() {
-  	console.log("added")
-  })
+ 	//  knex('news').insert(req.body).then(function() {
+ 	//  	console.log("added")
+ 	//  })
+ console.log(req.body);
 });
 
 router.get('/search/:words',function(req,res) {

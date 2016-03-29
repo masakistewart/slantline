@@ -7,20 +7,22 @@ angular.module('pineNews')
 })
 .controller('MainController', function($http, $scope, $location, UserFactory, AuthTokenFactory) {
 	getLoginStatus();
-	$http.get('/api/getFavorites')
-	$scope.login = login;
+	$scope.$watch();
+	// $scope.login = login;
 	$scope.signup = signUp;
 	$scope.logout = logout;
 
 	function getLoginStatus() {
-		token = AuthTokenFactory.getUser();
-		if (token) {
+		AuthTokenFactory.getUser().then(function(data) {
+			var token = data;
+			if (token) {
 			console.log('there is a token')
 			$scope.user = token;
 			$scope.header = "News For " + token.name
-		} else {
-			$scope.header = "News"
-		}
+			} else {
+				$scope.header = "News"
+			}
+		})
 	}
 
 	function logout() {
@@ -28,7 +30,7 @@ angular.module('pineNews')
 		$scope.user = false;
 	}
 
-	function login(name, password) {
+	$scope.login = function(name, password) {
 		UserFactory.login(name, password).then(function(response) {
 			getLoginStatus();
 			$location.path('/recentnews')
@@ -48,22 +50,29 @@ angular.module('pineNews')
 	}
 })
 .controller('searchCtrl', function($scope, $http, AuthTokenFactory, ApiRequestFactory) {
+	getLoginStatus();
 	$scope.showSecondaryBar = false;
 	$scope.news = {};
 	$scope.itemNumber = 4;
 	$scope.currentPage = 1;
   $scope.pageSize = 1;
-	$scope.searchAll = searchAll;
-
-	searchAll('Fun')
-
-
-	function searchAll(query) {
+	$scope.searchAll = function(query) {
 		ApiRequestFactory.getAPI('/api/search/'+ query).then(function(data) {
 			console.log(data)
 			$scope.data = data.data
 			$scope.showSecondaryBar = true;
 		})
+	}
+
+	function getLoginStatus() {
+		var token = AuthTokenFactory.getUser();
+		if (token) {
+			console.log('there is a token')
+			$scope.user = token;
+			$scope.header = "News For " + token.name
+		} else {
+			$scope.header = "News"
+		}
 	}
 
 	$scope.pageChangeHandler = function(num) {
@@ -76,19 +85,20 @@ angular.module('pineNews')
   }
 })
 .controller('MainPageCtrl', function($scope, $http, ApiRequestFactory, AuthTokenFactory) {
-	getLoginStatus()
 	$scope.news = {};
 	$scope.itemNumber = 4;
 	$scope.currentPage = 1;
   $scope.pageSize = 1;
+  getLoginStatus();
 
   function getLoginStatus() {
-  	token = AuthTokenFactory.getUser();
+  	var token = AuthTokenFactory.getUser();
   	if (token) {
   		console.log('there is a token')
   		$scope.user = token;
   		$scope.header = "News For " + token.name
   	} else {
+  		$scope.user = false;
   		$scope.header = "News"
   	}
   }
@@ -103,7 +113,10 @@ angular.module('pineNews')
 		$scope.news.hidden = false;
 	});
 })
-.controller('newsCtrl', function($scope, $http, $routeParams) {
+.controller('newsCtrl', function($scope, $http, $routeParams, FavoritesFactory, AuthTokenFactory) {
+	if(AuthTokenFactory.getUser()) {
+		getFavs();
+	}
 	$scope.newsIcons = {
     'aljazeera': 'https://superrepo.org/static/images/icons/original/xplugin.video.aljazeera.png.pagespeed.ic.jD0-KvIrNw.png',
     'cnn': "http://www.borissanchez.com/wp-content/uploads/2015/06/cnn_logo.png",
@@ -112,6 +125,17 @@ angular.module('pineNews')
     'huffingtonpost': "http://dantickner.com/wp-content/uploads/2014/03/HuffPo-logo1.jpg",
     'nytimes': "https://www.blackgate.com/wp-content/uploads/2013/02/The-New-York-Times-logo.jpg",
     'reuters': "https://georgianpartners.com/wp-content/uploads/2014/09/Reuters-logo.png"
+	}
+
+	$scope.addToFav = function() {
+		FavoritesFactory.favorite();
+		$scope.added = added;
+	}
+	function getFavs() {
+		console.log("hit")
+		FavoritesFactory.getFav().then(function(data) {
+			$scope.favorites = data;
+		})
 	}
 
 	$http.get('/api/news/' + $routeParams.id).then(function(data1) {

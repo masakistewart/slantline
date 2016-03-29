@@ -24,6 +24,27 @@ angular.module('pineNews', ['ngRoute', 'ngAnimate','angularMoment','angularUtils
 		}
 	}
 })
+.factory('FavoritesFactory', function($http, $routeParams, AuthTokenFactory, $q) {
+	return {
+		favorite: function(newsID) {
+			$http.get('/api/addFavorites/' + $routeParams.id).then(function(data) {
+				console.log(data)
+			}).catch(function(error) {
+				console.log("ERROR: " + error);
+			})
+		},
+		getFav: function() {
+			var deferred = $q.defer();
+			var user = AuthTokenFactory.getUser()
+			$http.get('/api/getFavorites/' + user.id).success(function(data) {
+					deferred.resolve(data)
+			}).catch(function(data) {
+				deferred.reject(data)
+			})
+			return deferred.promise;
+		}
+	}
+})
 .factory('UserFactory', function($http, $q, AuthTokenFactory){
 	return {
 		login: login,
@@ -69,7 +90,7 @@ angular.module('pineNews', ['ngRoute', 'ngAnimate','angularMoment','angularUtils
 		return deferred.promise;
 	}
 })
-.factory('AuthTokenFactory', function($window) {
+.factory('AuthTokenFactory', function($window, $q) {
 	var store = $window.localStorage;
 	var key = 'auth-token';
 
@@ -88,10 +109,12 @@ angular.module('pineNews', ['ngRoute', 'ngAnimate','angularMoment','angularUtils
 	}
 
 	function getUser() {
+		var deferred = $q.defer();
 		var token = getToken();
 		if(token) {
-			return parseToken(token)
+			deferred.resolve(parseToken(token))
 		}
+		return deferred.promise;
 	}
 
 	function parseToken(token) {
@@ -126,6 +149,10 @@ angular.module('pineNews', ['ngRoute', 'ngAnimate','angularMoment','angularUtils
 		templateUrl: '/views/partials/landingPage.html',
 		controller: 'landingPageCtrl'
 	})
+	.when('/favorites', {
+		templateUrl: '/views/partials/favorites.html',
+		controller: 'newsCtrl'
+	})
 	.when('/recentnews', {
 		templateUrl: '/views/partials/mainPage.html'
 	})
@@ -144,7 +171,4 @@ angular.module('pineNews', ['ngRoute', 'ngAnimate','angularMoment','angularUtils
 		templateUrl: '/views/partials/signup.html',
 		controller: 'MainController'
 	})
-	// .otherwise({
-	// 	redirectTo: '/'
-	// })
 })
