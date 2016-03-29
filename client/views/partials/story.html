@@ -1,12 +1,12 @@
 <div class="frame">
     <span class="helper"></span>
-    <img id="newsIcon" class="circle" src="{{newsIcons[item[0].data[0].source]}}" alt="">
+    <img id="newsIcon" src="{{newsIcons[item[0].data[0].source]}}" alt="item[0].data[0].source logo">
     <h5 class="center white-text">News Aricles Posted: {{item[1].data[0].count | number}}</h5>
 </div>
 <div ng-show="user" class="card-panel grey lighten-3">
   <div class="row">
     <div class="col s12">
-        <h2 class="center">{{item[0].data[0].title}}</h2>
+        <h2 class="center thin eight-hundred-text">{{item[0].data[0].title}}</h2>
     </div>
   </div>
   <div class="row">
@@ -32,8 +32,7 @@
         </tr>
       </tbody>
     </table>
-    <button ng-click="addToFav()" class="btn blue">Favorite</button>
-    <p>{{added}}</p>
+      <button ng-click="addToFav(item[0].data[0].id)" ng-show="!hide" class="btn blue">Favorite</button>
     </div>
   </div>
 </div>

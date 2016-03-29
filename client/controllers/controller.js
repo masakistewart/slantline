@@ -7,7 +7,6 @@ angular.module('pineNews')
 })
 .controller('MainController', function($http, $scope, $location, UserFactory, AuthTokenFactory) {
 	getLoginStatus();
-	$scope.$watch();
 	// $scope.login = login;
 	$scope.signup = signUp;
 	$scope.logout = logout;
@@ -21,6 +20,7 @@ angular.module('pineNews')
 			$scope.header = "News For " + token.name
 			} else {
 				$scope.header = "News"
+				$scope.user = false;
 			}
 		})
 	}
@@ -32,16 +32,16 @@ angular.module('pineNews')
 
 	$scope.login = function(name, password) {
 		UserFactory.login(name, password).then(function(response) {
-			getLoginStatus();
 			$location.path('/recentnews')
 			AuthTokenFactory.setToken(response);
+			getLoginStatus();
 		}).catch(handleError)
 	}
 
 	function signUp(name, password) {
 		UserFactory.signup(name, password).then(function(data) {
 			console.log(data);
-			login(name, password);
+			$scope.login(name, password);
 		});
 	}
 
@@ -113,10 +113,7 @@ angular.module('pineNews')
 		$scope.news.hidden = false;
 	});
 })
-.controller('newsCtrl', function($scope, $http, $routeParams, FavoritesFactory, AuthTokenFactory) {
-	if(AuthTokenFactory.getUser()) {
-		getFavs();
-	}
+.controller('NewsCtrl', function($scope, $http, $routeParams, FavoritesFactory, AuthTokenFactory) {
 	$scope.newsIcons = {
     'aljazeera': 'https://superrepo.org/static/images/icons/original/xplugin.video.aljazeera.png.pagespeed.ic.jD0-KvIrNw.png',
     'cnn': "http://www.borissanchez.com/wp-content/uploads/2015/06/cnn_logo.png",
@@ -127,15 +124,10 @@ angular.module('pineNews')
     'reuters': "https://georgianpartners.com/wp-content/uploads/2014/09/Reuters-logo.png"
 	}
 
-	$scope.addToFav = function() {
-		FavoritesFactory.favorite();
-		$scope.added = added;
-	}
-	function getFavs() {
-		console.log("hit")
-		FavoritesFactory.getFav().then(function(data) {
-			$scope.favorites = data;
-		})
+	$scope.addToFav = function(id) {
+		FavoritesFactory.favorite(id);
+		$scope.hide = true;
+		console.log('hit', id)
 	}
 
 	$http.get('/api/news/' + $routeParams.id).then(function(data1) {
@@ -145,3 +137,28 @@ angular.module('pineNews')
 		})
 	})
 })
+.controller('FavoritesController', function($scope, $http, $routeParams, FavoritesFactory, AuthTokenFactory) {
+	if(AuthTokenFactory.getUser()) {
+		getFavs();
+	}
+
+	$scope.removeFav = function(id, item) {
+		item.hide = true;
+		console.log(item.favorites_id)
+		FavoritesFactory.removeFav(item.favorites_id);
+	}
+
+	$scope.addToFav = function(id) {
+		FavoritesFactory.favorite(id);
+		$scope.added = true;
+		$scope.hide = true;
+		console.log('hit')
+	}
+
+	function getFavs() {
+		console.log("hit")
+		FavoritesFactory.getFav().then(function(data) {
+			$scope.favorites = data;
+		})
+	}
+});

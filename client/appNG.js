@@ -27,10 +27,12 @@ angular.module('pineNews', ['ngRoute', 'ngAnimate','angularMoment','angularUtils
 .factory('FavoritesFactory', function($http, $routeParams, AuthTokenFactory, $q) {
 	return {
 		favorite: function(newsID) {
+			var id = $routeParams.id
+			console.log('id is: ' + id + ' from the FavFact')
 			$http.get('/api/addFavorites/' + $routeParams.id).then(function(data) {
 				console.log(data)
 			}).catch(function(error) {
-				console.log("ERROR: " + error);
+				console.log("ERROR: " + error.data);
 			})
 		},
 		getFav: function() {
@@ -42,6 +44,15 @@ angular.module('pineNews', ['ngRoute', 'ngAnimate','angularMoment','angularUtils
 				deferred.reject(data)
 			})
 			return deferred.promise;
+		},
+		removeFav: function(fav_id) {
+			var apiPath = "api/removeFav/" + fav_id
+			console.log(fav_id)
+			setTimeout(function() {
+				$http.delete(apiPath).then(function() {
+					return "Deleted"
+				})
+			}, 100)
 		}
 	}
 })
@@ -151,7 +162,7 @@ angular.module('pineNews', ['ngRoute', 'ngAnimate','angularMoment','angularUtils
 	})
 	.when('/favorites', {
 		templateUrl: '/views/partials/favorites.html',
-		controller: 'newsCtrl'
+		controller: 'FavoritesController'
 	})
 	.when('/recentnews', {
 		templateUrl: '/views/partials/mainPage.html'
@@ -161,7 +172,7 @@ angular.module('pineNews', ['ngRoute', 'ngAnimate','angularMoment','angularUtils
 	})
 	.when('/news/:id', {
 		templateUrl: '/views/partials/story.html',
-		controller: 'newsCtrl'
+		controller: 'NewsCtrl'
 	})
 	.when('/login', {
 		templateUrl: '/views/partials/login.html',

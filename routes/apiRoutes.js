@@ -7,12 +7,20 @@ var atob 				= require('atob');
 var multiline 	= require('multiline');
 
 
+function parseToken(token) {
+	var base64Url = token.split('.')[1];
+	var base64 = base64Url.replace('-', '+').replace('_', '/');
+	return JSON.parse(atob(base64));
+}
+
+
 function ts_news(query, res) {
 	var connectionConfig = process.env.DATABASE_URL || 'postgres://localhost:5432/pythonTestDB';
 	var client = new pg.Client(connectionConfig);
 	client.connect();
 	var results = [];
 	var query = client.query("SELECT * FROM news WHERE to_tsvector(summary) @@ plainto_tsquery('" + query + "')");
+
 	query.on('row', function(row) {
     results.push(row);
   });
@@ -22,7 +30,6 @@ function ts_news(query, res) {
 		client.end();
 	});
 }
-
 
 
 router.get('/allNews',function(req,res) {
@@ -36,6 +43,7 @@ router.get('/allNews',function(req,res) {
 	}
 });
 
+
 router.get('/recentNews', function(req, res) {
 	knex.select("title", "created_at", "source").from("news").where('source', "=", "guardian").orderBy('created_at', 'desc').limit(4).then(function(data1) {
 		knex.select("title", "created_at", "source").from("news").where('source', "=", "fox").orderBy('created_at', 'desc').limit(4).then(function(data2) {
@@ -45,18 +53,22 @@ router.get('/recentNews', function(req, res) {
 						knex.select("title", "created_at", "source").from("news").where('source', "=", "aljazeera").orderBy('created_at', 'desc').limit(4).then(function(data6) {
 							knex.select("title", "created_at", "source").from("news").where('source', "=", "reuters").orderBy('created_at', 'desc').limit(4).then(function(data7) {
 								res.setHeader('Content-Type', "application/json");
-								var formattedArr = []
-								var dataArr = [data1,data2,data3,data4,data5,data6,data7];
-								for (var i = 0; i < dataArr.length; i++) {
-									var item = {}
-									item.sentence = ""
-									for (var j = 0; j < dataArr[j].length; j++) {
-										item.sentence += dataArr[i][j].title + " - " + dataArr[i][j].created_at + " - ";
-										item.source = dataArr[i][j].source
+								knex('news').count('title').then(function(count) {
+									var formattedArr = []
+									var arr = [data1,data2,data3,data4,data5,data6,data7]
+									var dataArr = [arr, count];
+
+									for (var i = 0; i < dataArr[0].length; i++) {
+										var item = {}
+										item.sentence = ""
+										for (var j = 0; j < dataArr[0][j].length; j++) {
+											item.sentence += dataArr[0][i][j].title + " - " + dataArr[0][i][j].created_at + " - ";
+											item.source = dataArr[0][i][j].source
+										}
+										formattedArr.push(item);
 									}
-									formattedArr.push(item);
-								}
-								res.json(formattedArr);
+									res.json([formattedArr, count]);
+								});
 							});
 						});
 					});
@@ -65,29 +77,42 @@ router.get('/recentNews', function(req, res) {
 		});
 	});
 
-
 	var options = {
   	pythonPath: '/usr/local/bin/python3',
   	scriptPath: __dirname + '/../pyScraping/'
 	};
+
 	pythonShell.run("nodejs-integration.py", options, function(err, result) {
 		console.log(err, result)
 	})
-
 });
+
 
 router.get('/addFavorites/:id',function(req,res) {
 	var newsId = req.params.id;
 	var favorited_at = Date.now();
-	if(req.headers.authorization) {
-		var token = req.headers.authorization.split(' ')[1];
-  	var user = parseToken(token);
-  	console.log(user);
-  	knex('favorites').insert({user_id: user.id, news_id: newsId}).then(function() {
-  		res.send('done')
-  	});
+	var token = req.headers.authorization
+	var user = parseToken(token)
+	if(token && newsId) {
+		knex('favorites').where({user_id: user.id, news_id: newsId}).then(function(data) {
+			if(!data[0]) {
+				var token = req.headers.authorization.split(' ')[1];
+	  		var user = parseToken(token);
+
+	  		console.log(user);
+
+	  		knex('favorites').insert({user_id: user.id, news_id: newsId}).then(function() {
+	  			res.send('done')
+	  		});
+			} else {
+				res.send({status: 404});
+			}
+		})
+	} else {
+		res.send('nopes')
 	}
 });
+
 
 router.get('/getFavorites/:id',function(req,res) { 
   	if(req.headers.authorization) {
@@ -95,7 +120,9 @@ router.get('/getFavorites/:id',function(req,res) {
     	var user = parseToken(token);
     	var connectionConfig = process.env.DATABASE_URL || 'postgres://localhost:5432/pythonTestDB';
   		var client = new pg.Client(connectionConfig);
+
   		client.connect();
+
   		var results = [];
   		var query = client.query("select * from favorites inner join users on users.id = favorites.user_id inner join news on favorites.news_id = news.id where users.id = " + user.id + ";");
 
@@ -110,11 +137,19 @@ router.get('/getFavorites/:id',function(req,res) {
   	}
 });
 
-function parseToken(token) {
-	var base64Url = token.split('.')[1];
-	var base64 = base64Url.replace('-', '+').replace('_', '/');
-	return JSON.parse(atob(base64));
-}
+router.delete('/removeFav/:id',function(req,res) { 
+  var token = req.headers.authorization
+  var user_id = parseToken(token).id;
+  var fav_id = req.params.id;
+  console.log(fav_id)
+  knex('favorites').where({favorites_id: fav_id}).del().then(function(data) {
+  	console.log(data);
+  	res.send(data)
+  }).catch(function(data) {
+  	console.log(data);
+  	res.send(data);
+  })
+ });
 
 router.get('/recentNewsStories',function(req,res) {
 	console.log(req.headers.authorization)
@@ -141,17 +176,20 @@ router.get('/recentNewsStories',function(req,res) {
 	}
 });
 
+
 router.get('/news/:id',function(req,res) {
   knex.select('*').from('news').where('id', '=', req.params.id).then(function(data) {
   	res.json(data);
   });
 });
 
-router.get('/agency/:source',function(req,res) { 
+
+router.get('/agency/:source',function(req,res) {
   knex('news').count('source').where('source', '=', req.params.source).then(function(data) {
   	res.json(data)
   });
 });
+
 
 router.post('/addNews',function(req,res) {
   if(!req.body) return res.sendStatus(400)
@@ -162,12 +200,16 @@ router.post('/addNews',function(req,res) {
  console.log(req.body);
 });
 
+
 router.get('/search/:words',function(req,res) {
 	var word = req.params.words.replace(/['20%' ]/g, " ")
 	ts_news(word, res)
  });
 
+
 router.put('/updateNews/:id/:passcode',function(req,res) {
 
- });
+});
+
+
 module.exports = router;

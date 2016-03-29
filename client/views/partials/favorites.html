@@ -5,7 +5,7 @@
 	<ul>
 		<li ng-repeat="item in favorites">
 			<div>
-				<div class="card-panel">
+				<div class="card-panel" ng-show="!item.hide">
 					<h3>{{item.title}}</h3>
 					<p>{{item.summary | limitTo:300}}</p>
 					<br>
@@ -13,6 +13,7 @@
 					<div class="card-action">
 					  <a class="waves-effect waves-light btn modal-trigger accent-bg" href="/#/news/{{item.id}}">More</a>
 					  <a class="btn accent-bg" href="{{item.link}}">{{item.source}}</a>
+					  <button class="black btn" ng-click="removeFav(item.id, item)">Remove</button>
 					</div>
 				</div>
 			</div>
