@@ -108,7 +108,6 @@ angular.module('pineNews')
   };
 
 	ApiRequestFactory.getAPI('/api/recentNewsStories').then(function(data) {
-		console.log(data)
 		$scope.news.items = data.data;
 		$scope.news.hidden = false;
 	});

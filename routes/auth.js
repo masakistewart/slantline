@@ -5,8 +5,8 @@ var bcrypt 			= require('bcrypt');
 var jwt 				= require('jsonwebtoken');
 var cors        = require('cors');
 require('dotenv').load();
-// Create Token Function
 
+// Create Token Function
 function createToken(user) {
 	return jwt.sign({id: user.id, name: user.name}, 'sannbfldaskjdbgsadgflfgyaoweghb231y5hsjafbashjk');
 }
@@ -16,7 +16,7 @@ router.post('/login',function(req,res) {
 	knex('users').where({name: req.body.name}).then(function(data){
     if(data[0]){
       var pass = req.body.password;
-    bcrypt.compare(pass, data[0].password, function(err, result) {
+      bcrypt.compare(pass, data[0].password, function(err, result) {
         if(result) {
           var token = createToken(data[0]);
           console.log(token);
@@ -47,15 +47,5 @@ router.post('/signup', function(req,res) {
   	})
   }
 });
-
-
-// router.get('/',function(req,res) {
-// 	var name = req.params.name, password = req.params.password;
-// 	console.log(req.query)
-//   knex('users').where(req.query).then(function(data){
-//   	console.log(data);
-//   });
-//  });
-
 module.exports = router;
 

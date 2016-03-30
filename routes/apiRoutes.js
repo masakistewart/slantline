@@ -109,7 +109,7 @@ router.get('/addFavorites/:id',function(req,res) {
 			}
 		})
 	} else {
-		res.send('nopes')
+		res.send('nopes');
 	}
 });
 
@@ -137,6 +137,7 @@ router.get('/getFavorites/:id',function(req,res) {
   	}
 });
 
+
 router.delete('/removeFav/:id',function(req,res) { 
   var token = req.headers.authorization
   var user_id = parseToken(token).id;
@@ -149,7 +150,8 @@ router.delete('/removeFav/:id',function(req,res) {
   	console.log(data);
   	res.send(data);
   })
- });
+});
+
 
 router.get('/recentNewsStories',function(req,res) {
 	console.log(req.headers.authorization)
