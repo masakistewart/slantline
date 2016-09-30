@@ -4,7 +4,7 @@ module.exports = {
     client: 'postgresql',
     connection: {
       host: 'localhost',
-      database: "pythonTestDB"
+      database: "NEWS_DB"
     }
   },
 

@@ -15,7 +15,7 @@ function parseToken(token) {
 
 
 function ts_news(query, res) {
-	var connectionConfig = process.env.DATABASE_URL || 'postgres://localhost:5432/pythonTestDB';
+	var connectionConfig = process.env.DATABASE_URL || 'postgres://localhost:5432/NEWS_DB';
 	var client = new pg.Client(connectionConfig);
 	client.connect();
 	var results = [];
@@ -51,11 +51,11 @@ router.get('/recentNews', function(req, res) {
 				knex.select("title", "created_at", "source").from("news").where('source', "=", "huffingtonpost").orderBy('created_at', 'desc').limit(4).then(function(data4) {
 					knex.select("title", "created_at", "source").from("news").where('source', "=", "cnn").orderBy('created_at', 'desc').limit(4).then(function(data5) {
 						knex.select("title", "created_at", "source").from("news").where('source', "=", "aljazeera").orderBy('created_at', 'desc').limit(4).then(function(data6) {
-							knex.select("title", "created_at", "source").from("news").where('source', "=", "reuters").orderBy('created_at', 'desc').limit(4).then(function(data7) {
+							// knex.select("title", "created_at", "source").from("news").where('source', "=", "reuters").orderBy('created_at', 'desc').limit(4).then(function(data7) {
 								res.setHeader('Content-Type', "application/json");
 								knex('news').count('title').then(function(count) {
 									var formattedArr = []
-									var arr = [data1,data2,data3,data4,data5,data6,data7]
+									var arr = [data1,data2,data3,data4,data5,data6]
 									var dataArr = [arr, count];
 
 									for (var i = 0; i < dataArr[0].length; i++) {
@@ -69,7 +69,7 @@ router.get('/recentNews', function(req, res) {
 									}
 									res.json([formattedArr, count]);
 								});
-							});
+							// });
 						});
 					});
 				});
@@ -118,7 +118,7 @@ router.get('/getFavorites/:id',function(req,res) {
   	if(req.headers.authorization) {
   		var token = req.headers.authorization.split(' ')[1];
     	var user = parseToken(token);
-    	var connectionConfig = process.env.DATABASE_URL || 'postgres://localhost:5432/pythonTestDB';
+    	var connectionConfig = process.env.DATABASE_URL || 'postgres://localhost:5432/NEWS_DB';
   		var client = new pg.Client(connectionConfig);
 
   		client.connect();
@@ -195,10 +195,10 @@ router.get('/agency/:source',function(req,res) {
 
 router.post('/addNews',function(req,res) {
   if(!req.body) return res.sendStatus(400)
-	res.send("thank you")
- 	//  knex('news').insert(req.body).then(function() {
- 	//  	console.log("added")
- 	//  })
+	res.send("thank you");
+ 	 knex('news').insert(req.body).then(function() {
+ 	 	console.log("added");
+ 	 })
  console.log(req.body);
 });
 

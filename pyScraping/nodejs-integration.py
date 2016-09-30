@@ -13,10 +13,10 @@ def cleanhtml(raw_html):
 
 newsFeeds = {
     'aljazeera': 'http://www.aljazeera.com/xml/rss/all.xml',
-    'cnn': "http://rss.cnn.com/rss/cnn_world.rss",
+    # 'cnn': "http://rss.cnn.com/rss/cnn_world.rss",
     'guardian': "http://www.theguardian.com/world/rss",
-    'fox': "http://feeds.foxnews.com/foxnews/world",
-    'huffingtonpost': "http://feeds.huffingtonpost.com/c/35496/f/677102/index.rss",
+    # 'fox': "http://feeds.foxnews.com/foxnews/world",
+    'huffingtonpost': "http://www.huffingtonpost.com/feeds/index.xml",
     'nytimes': "http://rss.nytimes.com/services/xml/rss/nyt/World.xml"
 }
 
@@ -46,7 +46,7 @@ def getHeadlines(name):
 
 def insertIntoNewsTable(arr):
     try:
-        conn = psycopg2.connect("dbname=pythonTestDB user=MasakiStewart")
+        conn = psycopg2.connect("dbname=NEWS_DB user=masakistewart")
     except:
         print("I am unable to connect to the database")
     con= conn.cursor()
@@ -61,18 +61,19 @@ def insertIntoNewsTable(arr):
 
 def getDbEntries(tableName):
     try:
-        conn = psycopg2.connect("dbname=pythonTestDB user=MasakiStewart")
+        conn = psycopg2.connect("dbname=NEWS_DB user=masakistewart")
         print('connected')
+        curs = conn.cursor()
+        sql = "SELECT title FROM {0};".format(tableName)
+        curs.execute(sql)
+        items = curs.fetchall()
+        conn.commit()
+        curs.close()
+        conn.close()
+        print(items)
+        return items
     except:
         print("I am unable to connect to the database")
-    curs = conn.cursor()
-    sql = "SELECT title FROM {0};".format(tableName)
-    curs.execute(sql)
-    items = curs.fetchall()
-    return items
-    conn.commit()
-    curs.close()
-    conn.close()
 
 
 def addIfDoesNotExist(tableName):

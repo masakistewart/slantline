@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import feedparser
+import re
 
 
 def cleanhtml(raw_html):
